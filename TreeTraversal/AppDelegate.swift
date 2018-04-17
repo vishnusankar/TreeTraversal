@@ -16,7 +16,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
-        let tree : Tree = Tree(traversalOrderType: .PreOrder)
+        let tree : Tree = Tree(traversalOrderType: .PostOrder)
         tree.addNode(value: 13)
         tree.addNode(value: 23)
         tree.addNode(value: 19)
@@ -24,14 +24,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         tree.addNode(value: 2)
         tree.addNode(value: 1)
         tree.addNode(value: 24)
-        tree.depthFirstTraverseInPreOrder(currentNode: tree.rootNode)
+        tree.berthFirstTraverse(currentNode: tree.rootNode)
+//        tree.depthFirstTraverseInPreOrder(currentNode: tree.rootNode)
 //        print(tree.treeQueue.array)
-        
-        let secondTree = Tree(traversalOrderType: .PreOrder)
-        for value in tree.treeQueue.array {
-            secondTree.addNode(value: value)
-        }
-        secondTree.depthFirstTraverseInPreOrder(currentNode: secondTree.rootNode)
+//
+//        let secondTree = Tree(traversalOrderType: .PostOrder)
+//        for value in tree.treeQueue.array {
+//            secondTree.addNode(value: value)
+//        }
+//        secondTree.depthFirstTraverseInPreOrder(currentNode: secondTree.rootNode)
         return true
     }
 
@@ -76,20 +77,23 @@ class Node {
     }
 }
 
-struct Queue {
-    var array : [Int] = [Int]()
+struct Queue<T> {
+    var array : [T] = [T]()
     var head : Int = 0
     var tail : Int = 0
     
-    mutating func enqueue(value: Int) {
+    mutating func enqueue(value: T) {
         self.array.insert(value, at: tail)
         self.tail += 1
     }
     
-    mutating func dequeue() -> Int {
-        let value = self.array[head]
-        self.head += 1
-        return value
+    mutating func dequeue() -> T? {
+        if self.array.count > 0 {
+            let value = self.array[head]
+            self.head += 1
+            return value
+        }
+        return nil
     }
 }
 
@@ -102,11 +106,12 @@ enum TraversalOrderType {
 class Tree {
     var rootNode : Node? = nil
     let traversalOrder : TraversalOrderType
-    var treeQueue : Queue = Queue()
+    var treeQueue : Queue = Queue<Int>()
     
     init(traversalOrderType : TraversalOrderType) {
         self.traversalOrder = traversalOrderType
     }
+    
     func addNode(value :Int) {
         
         if rootNode ==  nil {
@@ -154,6 +159,29 @@ class Tree {
             print(currentNode?.value as Any)
             self.treeQueue.enqueue(value: (currentNode?.value)!)
         }
+    }
+    
+    func berthFirstTraverse(currentNode : Node?) {
+        
+        if currentNode == nil {
+            return
+        }
+        
+        var queue : Queue = Queue<Node>()
+        queue.enqueue(value: currentNode!)
+        
+        while queue.array.count > 0 {
+            let tempNode = queue.dequeue()
+            print(tempNode?.value)
+            if tempNode?.leftNode != nil {
+                queue.enqueue(value: (tempNode?.leftNode!)!)
+            }
+            if tempNode?.rightNode != nil {
+                queue.enqueue(value: (tempNode?.rightNode!)!)
+            }
+        }
+        
+        queue.array.removeAll()
     }
 }
 
