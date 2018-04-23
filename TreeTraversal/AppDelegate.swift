@@ -16,7 +16,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
-        let tree : Tree = Tree(traversalOrderType: .PostOrder)
+        let tree : Tree = Tree(traversalOrderType: .PreOrder)
         tree.addNode(value: 13)
         tree.addNode(value: 23)
         tree.addNode(value: 19)
@@ -24,15 +24,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         tree.addNode(value: 2)
         tree.addNode(value: 1)
         tree.addNode(value: 24)
-        tree.berthFirstTraverse(currentNode: tree.rootNode)
-//        tree.depthFirstTraverseInPreOrder(currentNode: tree.rootNode)
-//        print(tree.treeQueue.array)
-//
-//        let secondTree = Tree(traversalOrderType: .PostOrder)
-//        for value in tree.treeQueue.array {
-//            secondTree.addNode(value: value)
-//        }
-//        secondTree.depthFirstTraverseInPreOrder(currentNode: secondTree.rootNode)
+//        tree.berthFirstTraverse(currentNode: tree.rootNode)
+        tree.depthFirstTraverseInPreOrder(currentNode: tree.rootNode)
+        
+        
+        
+//        var tree : ArrayTree = ArrayTree()
+//        tree.addNode(node: 13)
+//        tree.addNode(node: 23)
+//        tree.addNode(node: 19)
+//        tree.addNode(node: 6)
+//        tree.addNode(node: 2)
+//        tree.addNode(node: 1)
+//        tree.addNode(node: 24)
+//        
+
         return true
     }
 
@@ -62,7 +68,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 }
 
 class Node {
-    var value : Int = -1
+    var value : Int = 10
     var parentNode : Node?
     var leftNode : Node?
     var rightNode : Node?
@@ -107,6 +113,7 @@ class Tree {
     var rootNode : Node? = nil
     let traversalOrder : TraversalOrderType
     var treeQueue : Queue = Queue<Int>()
+    var treeInArray = [Node]()
     
     init(traversalOrderType : TraversalOrderType) {
         self.traversalOrder = traversalOrderType
@@ -141,24 +148,26 @@ class Tree {
     }
     
     func depthFirstTraverseInPreOrder(currentNode : Node?) {
+        
         //Traverse through left side
         if currentNode == nil {
             return
         }
-        if traversalOrder == .PreOrder {
-            print(currentNode?.value as Any)
-            self.treeQueue.enqueue(value: (currentNode?.value)!)
-        }
+//        if traversalOrder == .PreOrder {
+            //print(currentNode?.value as Any)
+//            self.treeQueue.enqueue(value: (currentNode?.value)!)
+//        }
+
         self.depthFirstTraverseInPreOrder(currentNode: currentNode?.leftNode)
-        if traversalOrder == .InOrder {
+//        if traversalOrder == .InOrder {
             print(currentNode?.value as Any)
-            self.treeQueue.enqueue(value: (currentNode?.value)!)
-        }
+//            self.treeQueue.enqueue(value: (currentNode?.value)!)
+//        }
         self.depthFirstTraverseInPreOrder(currentNode: currentNode?.rightNode)
-        if traversalOrder == .PostOrder {
-            print(currentNode?.value as Any)
-            self.treeQueue.enqueue(value: (currentNode?.value)!)
-        }
+//        if traversalOrder == .PostOrder {
+//            print(currentNode?.value as Any)
+//            self.treeQueue.enqueue(value: (currentNode?.value)!)
+//        }
     }
     
     func berthFirstTraverse(currentNode : Node?) {
@@ -185,3 +194,36 @@ class Tree {
     }
 }
 
+struct ArrayTree {
+    var layerLevel : Int = 0
+    var nodes : [Int] = [Int]()
+    
+    mutating func addNode(node : Int) {
+        //Adding root node
+        if nodes.count == 0 {
+            self.nodes.append(node)
+            return
+        }
+        
+        var parentNodeIndex = 0
+        var tempNode : Int? = self.nodes[parentNodeIndex] //root node
+        while tempNode != nil {
+            if tempNode! < node {
+                let childNodeIndexValue = 2*parentNodeIndex+1
+                let childNodeIndex = self.nodes.index(self.nodes.startIndex, offsetBy: childNodeIndexValue)
+                let childNode =  self.nodes[childNodeIndex]
+                
+                if childNode != nil {
+                    tempNode = childNode
+                    parentNodeIndex = childNodeIndex
+                }else {
+                    
+                }
+                
+            }
+            else if tempNode! > node {
+                
+            }
+        }
+    }
+}

@@ -6,32 +6,16 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "No"
+            shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TreeTraversal/AppDelegate.swift"
-            timestampString = "545663275.234453"
+            timestampString = "546093427.622049"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "142"
-            endingLineNumber = "142"
-            landmarkName = "depthFirstTraverseInPreOrder(currentNode:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "TreeTraversal/AppDelegate.swift"
-            timestampString = "545663275.234926"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "154"
-            endingLineNumber = "154"
-            landmarkName = "depthFirstTraverseInPreOrder(currentNode:)"
+            startingLineNumber = "211"
+            endingLineNumber = "211"
+            landmarkName = "addNode(node:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
